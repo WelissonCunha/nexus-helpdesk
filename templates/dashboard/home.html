@@ -1,0 +1,102 @@
+
+{% extends "base.html" %}
+
+{% block title %}Visão geral | Nexus HelpDesk{% endblock %}
+
+{% block page_heading %}Visão geral{% endblock %}
+
+{% block content %}
+
+<div class="welcome-section">
+    <div>
+        <span class="welcome-label">PAINEL DE CONTROLE</span>
+        <h2>Olá, {{ request.user.username }}!</h2>
+        <p>Bem-vindo ao Nexus. Seu ambiente de suporte está pronto.</p>
+    </div>
+
+    <div class="welcome-icon">✦</div>
+</div>
+
+<div class="section-heading">
+    <div>
+        <h4>Resumo dos chamados</h4>
+        <p>Indicadores do ambiente de atendimento.</p>
+    </div>
+</div>
+
+<div class="row g-3">
+
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon icon-blue">▤</div>
+            <span>Total de chamados</span>
+            <h3>0</h3>
+            <small>Aguardando primeiros registros</small>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon icon-orange">◷</div>
+            <span>Em atendimento</span>
+            <h3>0</h3>
+            <small>Chamados em andamento</small>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon icon-purple">◉</div>
+            <span>Aguardando</span>
+            <h3>0</h3>
+            <small>Pendentes de atendimento</small>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="stat-card">
+            <div class="stat-icon icon-green">✓</div>
+            <span>Resolvidos</span>
+            <h3>0</h3>
+            <small>Chamados concluídos</small>
+        </div>
+    </div>
+
+</div>
+
+<div class="row g-3 mt-2">
+
+    <div class="col-lg-8">
+        <div class="content-card">
+            <h5>Atividade recente</h5>
+            <p class="text-muted">
+                Quando os primeiros chamados forem registrados,
+                as atividades aparecerão aqui.
+            </p>
+
+            <div class="empty-state">
+                <div class="empty-icon">▤</div>
+                <strong>Nenhuma atividade registrada</strong>
+                <span>Seu histórico de atendimento aparecerá aqui.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="content-card">
+            <h5>Central de suporte</h5>
+            <p class="text-muted">
+                Gerencie solicitações e acompanhe o atendimento.
+            </p>
+
+            <div class="support-highlight">
+                <div class="support-symbol">N</div>
+                <strong>Nexus HelpDesk</strong>
+                <span>Organização e eficiência para seu suporte.</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
