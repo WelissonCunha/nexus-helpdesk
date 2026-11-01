@@ -36,4 +36,8 @@ urlpatterns = [
     ),
 
     path("", include("apps.dashboard.urls")),
+
+    path("chamados/", include("apps.tickets.urls")),
+
+    path("", include("apps.dashboard.urls")),
 ]

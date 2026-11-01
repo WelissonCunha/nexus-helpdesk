@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+
+{% block title %}Chamados | Nexus HelpDesk{% endblock %}
+
+{% block page_heading %}Chamados{% endblock %}
+
+{% block content %}
+
+<div class="welcome-section">
+    <div>
+        <span class="welcome-label">CENTRAL DE ATENDIMENTO</span>
+        <h2>Gerenciamento de chamados</h2>
+        <p>Gerencie e acompanhe todas as solicitações de suporte.</p>
+    </div>
+
+    <div class="welcome-icon">
+        <i class="bi bi-ticket-detailed"></i>
+    </div>
+</div>
+
+<div class="content-card mt-4">
+    <h5>Todos os chamados</h5>
+    <p class="text-muted">
+        Os chamados registrados aparecerão nesta área.
+    </p>
+
+    <div class="nexus-empty-state">
+        <div class="nexus-empty-icon">
+            <i class="bi bi-inbox"></i>
+        </div>
+
+        <strong>Nenhum chamado encontrado</strong>
+
+        <p>Comece registrando sua primeira solicitação de suporte.</p>
+
+        <button class="nexus-btn nexus-btn-primary" disabled>
+            <i class="bi bi-plus-circle"></i>
+            Novo chamado
+        </button>
+    </div>
+</div>
+
+{% endblock %}

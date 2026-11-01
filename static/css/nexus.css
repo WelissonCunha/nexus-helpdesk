@@ -1,12 +1,35 @@
-
 :root {
     --nexus-primary: #2563eb;
     --nexus-dark: #101b35;
     --nexus-sidebar: #111c35;
+
     --nexus-background: #f5f7fb;
+    --nexus-surface: #ffffff;
+    --nexus-surface-alt: #f8fafc;
+    --nexus-input: #ffffff;
+
     --nexus-text: #18243b;
     --nexus-muted: #8993a7;
     --nexus-border: #e9edf4;
+
+    --nexus-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+}
+
+/* Tema escuro */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --nexus-sidebar: #0b1220;
+    --nexus-background: #0f172a;
+    --nexus-surface: #172235;
+    --nexus-surface-alt: #1e293b;
+    --nexus-input: #111c2e;
+
+    --nexus-text: #e5e7eb;
+    --nexus-muted: #94a3b8;
+    --nexus-border: #2b394f;
+
+    --nexus-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
 }
 
 * {
@@ -95,11 +118,11 @@ body {
     font-weight: 650;
 }
 
-.login-card .form-control {
-    padding: 13px 14px;
-    border: 1px solid #e1e6ef;
-    border-radius: 10px;
-    font-size: 14px;
+/* Campos de formulário */
+.form-control {
+    background-color: var(--nexus-input);
+    color: var(--nexus-text);
+    border-color: var(--nexus-border);
 }
 
 .login-card .form-control:focus {
@@ -139,8 +162,11 @@ body {
 
 /* APLICAÇÃO */
 
-.app-body {
+/* Fundo geral */
+.app-body,
+.login-body {
     background: var(--nexus-background);
+    color: var(--nexus-text);
 }
 
 .app-wrapper {
@@ -299,6 +325,22 @@ body {
     margin: auto;
 }
 
+/* Textos secundários */
+.text-muted {
+    color: var(--nexus-muted) !important;
+}
+
+/* Botão de alternância */
+.theme-toggle {
+    color: var(--nexus-text);
+    border-color: var(--nexus-border);
+}
+
+.theme-toggle:hover {
+    background: var(--nexus-surface-alt);
+    color: var(--nexus-text);
+}
+
 /* DASHBOARD */
 
 .welcome-section {
@@ -397,7 +439,7 @@ body {
     background: #f0fdf4;
 }
 
-.stat-card > span {
+.stat-card>span {
     display: block;
     font-size: 12px;
     color: var(--nexus-muted);
@@ -483,6 +525,424 @@ body {
     color: var(--nexus-muted);
 }
 
+/* ===== AJUSTES DO TEMA ESCURO ===== */
+
+:root[data-theme="dark"] .stat-card,
+:root[data-theme="dark"] .content-card,
+:root[data-theme="dark"] .topbar,
+:root[data-theme="dark"] .login-card {
+    background-color: var(--nexus-surface) !important;
+    color: var(--nexus-text);
+    border-color: var(--nexus-border);
+}
+
+/* Preservar as cores originais dos ícones */
+
+
+/* Garantir contraste dos textos */
+:root[data-theme="dark"] .stat-card h1,
+:root[data-theme="dark"] .stat-card h2,
+:root[data-theme="dark"] .stat-card h3,
+:root[data-theme="dark"] .stat-card p,
+:root[data-theme="dark"] .content-card h1,
+:root[data-theme="dark"] .content-card h2,
+:root[data-theme="dark"] .content-card h3 {
+    color: var(--nexus-text);
+}
+
+:root[data-theme="dark"] .stat-card .text-muted,
+:root[data-theme="dark"] .content-card .text-muted,
+:root[data-theme="dark"] .login-card .text-muted {
+    color: var(--nexus-muted) !important;
+}
+
+:root[data-theme="dark"] .form-control {
+    background-color: var(--nexus-input);
+    color: var(--nexus-text);
+    border-color: var(--nexus-border);
+}
+
+:root[data-theme="dark"] .form-control::placeholder {
+    color: var(--nexus-muted);
+}
+
+:root[data-theme="dark"] .support-highlight {
+    background-color: var(--nexus-surface-alt);
+}
+
+/* ===== ÍCONES DOS INDICADORES ===== */
+
+.stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+/* Azul */
+.stat-icon.icon-blue {
+    background-color: #eff6ff !important;
+    color: #2563eb !important;
+}
+
+/* Laranja */
+.stat-icon.icon-orange {
+    background-color: #fff7ed !important;
+    color: #ea580c !important;
+}
+
+/* Roxo */
+.stat-icon.icon-purple {
+    background-color: #faf5ff !important;
+    color: #9333ea !important;
+}
+
+/* Verde */
+.stat-icon.icon-green {
+    background-color: #f0fdf4 !important;
+    color: #16a34a !important;
+}
+
+/* Ajustes para tema escuro */
+:root[data-theme="dark"] .stat-icon.icon-blue {
+    background-color: #172e50 !important;
+    color: #60a5fa !important;
+}
+
+:root[data-theme="dark"] .stat-icon.icon-orange {
+    background-color: #422b1d !important;
+    color: #fb923c !important;
+}
+
+:root[data-theme="dark"] .stat-icon.icon-purple {
+    background-color: #35244f !important;
+    color: #c084fc !important;
+}
+
+:root[data-theme="dark"] .stat-icon.icon-green {
+    background-color: #173b2c !important;
+    color: #4ade80 !important;
+}
+
+/* =================================
+   NEXUS - SISTEMA GLOBAL DE ÍCONES
+================================= */
+
+/* Ícones da navegação */
+.nexus-nav-icon {
+    width: 22px;
+    min-width: 22px;
+    font-size: 17px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+}
+
+/* Ícones em caixas */
+.nexus-icon {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* Azul */
+.nexus-icon-blue {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+/* Laranja */
+.nexus-icon-orange {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+/* Roxo */
+.nexus-icon-purple {
+    background: #faf5ff;
+    color: #9333ea;
+}
+
+/* Verde */
+.nexus-icon-green {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+/* Tema escuro */
+:root[data-theme="dark"] .nexus-icon-blue {
+    background: #172e50;
+    color: #60a5fa;
+}
+
+:root[data-theme="dark"] .nexus-icon-orange {
+    background: #422b1d;
+    color: #fb923c;
+}
+
+:root[data-theme="dark"] .nexus-icon-purple {
+    background: #35244f;
+    color: #c084fc;
+}
+
+:root[data-theme="dark"] .nexus-icon-green {
+    background: #173b2c;
+    color: #4ade80;
+}
+
+
+/* ==========================================
+   NEXUS DESIGN SYSTEM - COMPONENTES E ÍCONES
+========================================== */
+
+/* BOTÕES */
+
+.nexus-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 9px;
+    padding: 9px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.nexus-btn i {
+    font-size: 16px;
+}
+
+.nexus-btn-primary {
+    background: var(--nexus-primary);
+    border: 1px solid var(--nexus-primary);
+    color: #fff;
+}
+
+.nexus-btn-primary:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.nexus-btn-secondary {
+    background: var(--nexus-surface);
+    color: var(--nexus-text);
+    border: 1px solid var(--nexus-border);
+}
+
+.nexus-btn-secondary:hover {
+    background: var(--nexus-surface-alt);
+    color: var(--nexus-text);
+}
+
+.nexus-btn-danger {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.nexus-btn-danger:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* FORMULÁRIOS */
+
+.nexus-form-group {
+    margin-bottom: 18px;
+}
+
+.nexus-form-label {
+    display: block;
+    color: var(--nexus-text);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.nexus-form-control {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid var(--nexus-border);
+    border-radius: 9px;
+    background: var(--nexus-input);
+    color: var(--nexus-text);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.nexus-form-control:focus {
+    border-color: var(--nexus-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.nexus-form-control::placeholder {
+    color: var(--nexus-muted);
+}
+
+.nexus-input-icon {
+    position: relative;
+}
+
+.nexus-input-icon > i {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--nexus-muted);
+    pointer-events: none;
+}
+
+.nexus-input-icon .nexus-form-control {
+    padding-left: 40px;
+}
+
+.nexus-form-help {
+    display: block;
+    margin-top: 6px;
+    color: var(--nexus-muted);
+    font-size: 12px;
+}
+
+/* NOTIFICAÇÕES */
+
+.nexus-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.nexus-alert > i {
+    font-size: 19px;
+    flex-shrink: 0;
+}
+
+.nexus-alert strong {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.nexus-alert-success {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #166534;
+}
+
+.nexus-alert-warning {
+    background: #fffbeb;
+    border-color: #fde68a;
+    color: #92400e;
+}
+
+.nexus-alert-danger {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+.nexus-alert-info {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1e40af;
+}
+
+/* NOTIFICAÇÕES NO TEMA ESCURO */
+
+:root[data-theme="dark"] .nexus-alert-success {
+    background: #173b2c;
+    border-color: #245c40;
+    color: #86efac;
+}
+
+:root[data-theme="dark"] .nexus-alert-warning {
+    background: #422f19;
+    border-color: #72501f;
+    color: #fcd34d;
+}
+
+:root[data-theme="dark"] .nexus-alert-danger {
+    background: #451f28;
+    border-color: #71313d;
+    color: #fca5a5;
+}
+
+:root[data-theme="dark"] .nexus-alert-info {
+    background: #172e50;
+    border-color: #294c78;
+    color: #93c5fd;
+}
+
+/* ESTADOS VAZIOS */
+
+.nexus-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 42px 20px;
+}
+
+.nexus-empty-icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 17px;
+    background: var(--nexus-surface-alt);
+    color: var(--nexus-muted);
+    font-size: 25px;
+    margin-bottom: 16px;
+}
+
+.nexus-empty-state strong {
+    color: var(--nexus-text);
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.nexus-empty-state p {
+    color: var(--nexus-muted);
+    font-size: 13px;
+    max-width: 360px;
+    margin-bottom: 18px;
+}
+
+/* TAMANHO PADRÃO DOS ÍCONES */
+
+.nexus-icon-sm {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+}
+
+.nexus-icon-lg {
+    width: 48px;
+    height: 48px;
+    font-size: 21px;
+}
+
+
 @media (max-width: 768px) {
     .app-wrapper {
         flex-direction: column;
@@ -533,7 +993,13 @@ body {
         display: none;
     }
 
-    .login-card {
-        padding: 27px 22px;
+    .login-card,
+    .stat-card,
+    .content-card,
+    .topbar {
+        background: var(--nexus-surface);
+        color: var(--nexus-text);
+        border-color: var(--nexus-border);
+        box-shadow: var(--nexus-shadow);
     }
 }
