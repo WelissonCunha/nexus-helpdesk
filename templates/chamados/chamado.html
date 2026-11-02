@@ -2,7 +2,6 @@
 {% extends "base.html" %}
 
 {% block title %}Chamados | Nexus HelpDesk{% endblock %}
-
 {% block page_heading %}Chamados{% endblock %}
 
 {% block content %}
@@ -11,7 +10,7 @@
     <div>
         <span class="welcome-label">CENTRAL DE ATENDIMENTO</span>
         <h2>Gerenciamento de chamados</h2>
-        <p>Gerencie e acompanhe todas as solicitações de suporte.</p>
+        <p>Consulte e acompanhe as solicitações de suporte.</p>
     </div>
 
     <div class="welcome-icon">
@@ -19,11 +18,176 @@
     </div>
 </div>
 
-<div class="content-card mt-4">
-    <h5>Todos os chamados</h5>
-    <p class="text-muted">
-        Os chamados registrados aparecerão nesta área.
-    </p>
+<div class="section-heading mt-4">
+    <div>
+        <h4>Todos os chamados</h4>
+        <p>Chamados das organizações às quais você pertence.</p>
+    </div>
+
+    <span class="badge text-bg-primary">
+        {{ pagina.paginator.count }} registros
+    </span>
+</div>
+
+{% if not possui_organizacao %}
+
+<div class="content-card">
+    <div class="nexus-empty-state">
+        <div class="nexus-empty-icon">
+            <i class="bi bi-building-x"></i>
+        </div>
+
+        <strong>Nenhuma organização vinculada</strong>
+
+        <p>
+            Seu usuário ainda não está associado a uma organização.
+            Solicite ao administrador o acesso ao ambiente.
+        </p>
+    </div>
+</div>
+
+{% else %}
+
+<div class="content-card">
+
+    <form method="get" class="row g-3 mb-4">
+
+        <div class="col-lg-5">
+            <label class="nexus-form-label">Pesquisar</label>
+
+            <div class="nexus-input-icon">
+                <i class="bi bi-search"></i>
+                <input
+                    type="search"
+                    name="q"
+                    class="nexus-form-control"
+                    placeholder="Título ou descrição..."
+                    value="{{ pesquisa }}"
+                >
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <label class="nexus-form-label">Status</label>
+
+            <select name="status" class="nexus-form-control">
+                <option value="">Todos os status</option>
+
+                {% for valor, rotulo in status_choices %}
+                    <option
+                        value="{{ valor }}"
+                        {% if status_selecionado == valor %}selected{% endif %}
+                    >
+                        {{ rotulo }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2">
+            <label class="nexus-form-label">Prioridade</label>
+
+            <select name="priority" class="nexus-form-control">
+                <option value="">Todas</option>
+
+                {% for valor, rotulo in priority_choices %}
+                    <option
+                        value="{{ valor }}"
+                        {% if prioridade_selecionada == valor %}selected{% endif %}
+                    >
+                        {{ rotulo }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 d-flex align-items-end">
+            <button type="submit" class="nexus-btn nexus-btn-primary w-100">
+                <i class="bi bi-funnel"></i>
+                Filtrar
+            </button>
+        </div>
+
+    </form>
+
+    {% if pagina.object_list %}
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Chamado</th>
+                    <th>Organização</th>
+                    <th>Solicitante</th>
+                    <th>Técnico</th>
+                    <th>Prioridade</th>
+                    <th>Status</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for chamado in pagina %}
+                <tr>
+                    <td>
+                        <strong>{{ chamado.title }}</strong>
+                        <small class="d-block text-muted">
+                            {{ chamado.id|truncatechars:13 }}
+                        </small>
+                    </td>
+
+                    <td>{{ chamado.organization.name }}</td>
+
+                    <td>{{ chamado.requester.username }}</td>
+
+                    <td>
+                        {% if chamado.assigned_to %}
+                            {{ chamado.assigned_to.username }}
+                        {% else %}
+                            <span class="text-muted">Não atribuído</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if chamado.priority == "URGENT" %}
+                            <span class="badge text-bg-danger">Urgente</span>
+                        {% elif chamado.priority == "HIGH" %}
+                            <span class="badge text-bg-warning">Alta</span>
+                        {% elif chamado.priority == "MEDIUM" %}
+                            <span class="badge text-bg-primary">Média</span>
+                        {% else %}
+                            <span class="badge text-bg-secondary">Baixa</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if chamado.status == "RESOLVED" or chamado.status == "CLOSED" %}
+                            <span class="badge text-bg-success">
+                                {{ chamado.get_status_display }}
+                            </span>
+                        {% elif chamado.status == "IN_PROGRESS" %}
+                            <span class="badge text-bg-primary">
+                                {{ chamado.get_status_display }}
+                            </span>
+                        {% elif chamado.status == "WAITING" %}
+                            <span class="badge text-bg-warning">
+                                {{ chamado.get_status_display }}
+                            </span>
+                        {% else %}
+                            <span class="badge text-bg-secondary">
+                                {{ chamado.get_status_display }}
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ chamado.created_at|date:"d/m/Y H:i" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
 
     <div class="nexus-empty-state">
         <div class="nexus-empty-icon">
@@ -32,13 +196,44 @@
 
         <strong>Nenhum chamado encontrado</strong>
 
-        <p>Comece registrando sua primeira solicitação de suporte.</p>
-
-        <button class="nexus-btn nexus-btn-primary" disabled>
-            <i class="bi bi-plus-circle"></i>
-            Novo chamado
-        </button>
+        <p>
+            Não existem chamados correspondentes aos filtros selecionados.
+        </p>
     </div>
+
+    {% endif %}
+
+    {% if pagina.has_other_pages %}
+    <nav class="d-flex justify-content-between align-items-center mt-3">
+
+        <span class="text-muted small">
+            Página {{ pagina.number }} de {{ pagina.paginator.num_pages }}
+        </span>
+
+        <div class="d-flex gap-2">
+
+            {% if pagina.has_previous %}
+            <a class="nexus-btn nexus-btn-secondary"
+               href="?{% querystring page=pagina.previous_page_number %}">
+                <i class="bi bi-chevron-left"></i>
+                Anterior
+            </a>
+            {% endif %}
+
+            {% if pagina.has_next %}
+            <a class="nexus-btn nexus-btn-secondary"
+               href="?{% querystring page=pagina.next_page_number %}">
+                Próxima
+                <i class="bi bi-chevron-right"></i>
+            </a>
+            {% endif %}
+
+        </div>
+    </nav>
+    {% endif %}
+
 </div>
+
+{% endif %}
 
 {% endblock %}
