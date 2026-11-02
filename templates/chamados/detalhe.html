@@ -1,0 +1,86 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ chamado.title }} | Nexus HelpDesk{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <a href="{% url 'chamados' %}" class="text-decoration-none">
+                <i class="bi bi-arrow-left"></i> Voltar aos chamados
+            </a>
+
+            <h2 class="mt-3">{{ chamado.title }}</h2>
+            <p class="text-secondary mb-0">
+                Organização: {{ chamado.organization.name }}
+            </p>
+        </div>
+    </div>
+
+    <div class="card p-4 mb-4">
+        <h5>Descrição</h5>
+        <p>{{ chamado.description|linebreaksbr }}</p>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <strong>Status</strong>
+                <p>{{ chamado.get_status_display }}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Prioridade</strong>
+                <p>{{ chamado.get_priority_display }}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Solicitante</strong>
+                <p>{{ chamado.requester.username }}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Técnico responsável</strong>
+                <p>
+                    {{ chamado.assigned_to.username|default:"Não atribuído" }}
+                </p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Aberto em</strong>
+                <p>{{ chamado.created_at|date:"d/m/Y H:i" }}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Última atualização</strong>
+                <p>{{ chamado.updated_at|date:"d/m/Y H:i" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card p-4">
+        <h5>Comentários</h5>
+
+        {% for comentario in chamado.comments.all %}
+            {% if not comentario.is_internal %}
+                <div class="border-bottom py-3">
+                    <strong>{{ comentario.author.username }}</strong>
+                    <p class="mb-1">{{ comentario.message|linebreaksbr }}</p>
+                    <small class="text-secondary">
+                        {{ comentario.created_at|date:"d/m/Y H:i" }}
+                    </small>
+                </div>
+            {% endif %}
+        {% empty %}
+            <p class="text-secondary mb-0">
+                Nenhum comentário registrado.
+            </p>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

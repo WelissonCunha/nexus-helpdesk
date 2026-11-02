@@ -1,0 +1,128 @@
+
+{% extends "base.html" %}
+
+{% block title %}Novo chamado | Nexus HelpDesk{% endblock %}
+{% block page_heading %}Novo chamado{% endblock %}
+
+{% block content %}
+
+<div class="welcome-section">
+    <div>
+        <span class="welcome-label">CENTRAL DE ATENDIMENTO</span>
+        <h2>Abrir novo chamado</h2>
+        <p>Descreva sua solicitação para nossa equipe de suporte.</p>
+    </div>
+
+    <div class="welcome-icon">
+        <i class="bi bi-plus-circle"></i>
+    </div>
+</div>
+
+<div class="content-card mt-4">
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="nexus-alert nexus-alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="nexus-form-group mb-4">
+            <label class="nexus-form-label" for="organization">
+                Organização *
+            </label>
+
+            <select
+                name="organization"
+                id="organization"
+                class="nexus-form-control"
+                required
+            >
+                <option value="">Selecione uma organização</option>
+
+                {% for organizacao in organizacoes %}
+                    <option value="{{ organizacao.id }}">
+                        {{ organizacao.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <small class="nexus-form-help">
+                Selecione a empresa à qual este chamado pertence.
+            </small>
+        </div>
+
+        <div class="nexus-form-group mb-4">
+            <label class="nexus-form-label" for="title">
+                Título do chamado *
+            </label>
+
+            <input
+                type="text"
+                name="title"
+                id="title"
+                class="nexus-form-control"
+                maxlength="200"
+                placeholder="Ex.: Computador não liga"
+                required
+            >
+        </div>
+
+        <div class="nexus-form-group mb-4">
+            <label class="nexus-form-label" for="description">
+                Descrição *
+            </label>
+
+            <textarea
+                name="description"
+                id="description"
+                class="nexus-form-control"
+                rows="5"
+                placeholder="Descreva detalhadamente o problema..."
+                required
+            ></textarea>
+        </div>
+
+        <div class="nexus-form-group mb-4">
+            <label class="nexus-form-label" for="priority">
+                Prioridade *
+            </label>
+
+            <select
+                name="priority"
+                id="priority"
+                class="nexus-form-control"
+                required
+            >
+                {% for valor, rotulo in priority_choices %}
+                    <option
+                        value="{{ valor }}"
+                        {% if valor == "MEDIUM" %}selected{% endif %}
+                    >
+                        {{ rotulo }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a href="{% url 'chamados' %}"
+               class="nexus-btn nexus-btn-secondary">
+                Cancelar
+            </a>
+
+            <button type="submit" class="nexus-btn nexus-btn-primary">
+                <i class="bi bi-check-lg"></i>
+                Criar chamado
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

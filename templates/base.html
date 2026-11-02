@@ -52,13 +52,17 @@
 
             <div class="sidebar-section">MENU PRINCIPAL</div>
 
+
             <nav class="sidebar-nav">
-                <a href="{% url 'dashboard' %}" class="nav-link active">
+
+                <a href="{% url 'dashboard' %}"
+                    class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                     <i class="bi bi-grid-1x2 nexus-nav-icon"></i>
                     Visão geral
                 </a>
 
-                <a href="{% url 'chamados' %}" class="nav-link">
+                <a href="{% url 'chamados' %}"
+                    class="nav-link {% if request.resolver_match.url_name == 'chamados' or request.resolver_match.url_name == 'detalhe_chamado' %}active{% endif %}">
                     <i class="bi bi-ticket-detailed nexus-nav-icon"></i>
                     Chamados
                 </a>
@@ -77,6 +81,7 @@
                     <i class="bi bi-gear nexus-nav-icon"></i>
                     Configurações
                 </a>
+
             </nav>
             </nav>
 

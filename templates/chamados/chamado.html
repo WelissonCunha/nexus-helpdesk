@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block title %}Chamados | Nexus HelpDesk{% endblock %}
@@ -24,9 +23,16 @@
         <p>Chamados das organizações às quais você pertence.</p>
     </div>
 
-    <span class="badge text-bg-primary">
-        {{ pagina.paginator.count }} registros
-    </span>
+    <div class="d-flex align-items-center gap-3">
+        <span class="badge text-bg-primary">
+            {{ pagina.paginator.count }} registros
+        </span>
+
+        <a href="{% url 'novo_chamado' %}" class="nexus-btn nexus-btn-primary">
+            <i class="bi bi-plus-lg"></i>
+            Novo chamado
+        </a>
+    </div>
 </div>
 
 {% if not possui_organizacao %}
@@ -57,13 +63,8 @@
 
             <div class="nexus-input-icon">
                 <i class="bi bi-search"></i>
-                <input
-                    type="search"
-                    name="q"
-                    class="nexus-form-control"
-                    placeholder="Título ou descrição..."
-                    value="{{ pesquisa }}"
-                >
+                <input type="search" name="q" class="nexus-form-control" placeholder="Título ou descrição..."
+                    value="{{ pesquisa }}">
             </div>
         </div>
 
@@ -74,12 +75,9 @@
                 <option value="">Todos os status</option>
 
                 {% for valor, rotulo in status_choices %}
-                    <option
-                        value="{{ valor }}"
-                        {% if status_selecionado == valor %}selected{% endif %}
-                    >
-                        {{ rotulo }}
-                    </option>
+                <option value="{{ valor }}" {% if status_selecionado == valor %}selected{% endif %}>
+                    {{ rotulo }}
+                </option>
                 {% endfor %}
             </select>
         </div>
@@ -91,12 +89,9 @@
                 <option value="">Todas</option>
 
                 {% for valor, rotulo in priority_choices %}
-                    <option
-                        value="{{ valor }}"
-                        {% if prioridade_selecionada == valor %}selected{% endif %}
-                    >
-                        {{ rotulo }}
-                    </option>
+                <option value="{{ valor }}" {% if prioridade_selecionada == valor %}selected{% endif %}>
+                    {{ rotulo }}
+                </option>
                 {% endfor %}
             </select>
         </div>
@@ -125,15 +120,14 @@
                     <th>Data</th>
                 </tr>
             </thead>
-
+            
             <tbody>
                 {% for chamado in pagina %}
                 <tr>
                     <td>
-                        <strong>{{ chamado.title }}</strong>
-                        <small class="d-block text-muted">
-                            {{ chamado.id|truncatechars:13 }}
-                        </small>
+                        <a href="{% url 'detalhe_chamado' chamado.id %}" class="text-decoration-none">
+                            {{ chamado.title }}
+                        </a>
                     </td>
 
                     <td>{{ chamado.organization.name }}</td>
@@ -142,41 +136,41 @@
 
                     <td>
                         {% if chamado.assigned_to %}
-                            {{ chamado.assigned_to.username }}
+                        {{ chamado.assigned_to.username }}
                         {% else %}
-                            <span class="text-muted">Não atribuído</span>
+                        <span class="text-muted">Não atribuído</span>
                         {% endif %}
                     </td>
 
                     <td>
                         {% if chamado.priority == "URGENT" %}
-                            <span class="badge text-bg-danger">Urgente</span>
+                        <span class="badge text-bg-danger">Urgente</span>
                         {% elif chamado.priority == "HIGH" %}
-                            <span class="badge text-bg-warning">Alta</span>
+                        <span class="badge text-bg-warning">Alta</span>
                         {% elif chamado.priority == "MEDIUM" %}
-                            <span class="badge text-bg-primary">Média</span>
+                        <span class="badge text-bg-primary">Média</span>
                         {% else %}
-                            <span class="badge text-bg-secondary">Baixa</span>
+                        <span class="badge text-bg-secondary">Baixa</span>
                         {% endif %}
                     </td>
 
                     <td>
                         {% if chamado.status == "RESOLVED" or chamado.status == "CLOSED" %}
-                            <span class="badge text-bg-success">
-                                {{ chamado.get_status_display }}
-                            </span>
+                        <span class="badge text-bg-success">
+                            {{ chamado.get_status_display }}
+                        </span>
                         {% elif chamado.status == "IN_PROGRESS" %}
-                            <span class="badge text-bg-primary">
-                                {{ chamado.get_status_display }}
-                            </span>
+                        <span class="badge text-bg-primary">
+                            {{ chamado.get_status_display }}
+                        </span>
                         {% elif chamado.status == "WAITING" %}
-                            <span class="badge text-bg-warning">
-                                {{ chamado.get_status_display }}
-                            </span>
+                        <span class="badge text-bg-warning">
+                            {{ chamado.get_status_display }}
+                        </span>
                         {% else %}
-                            <span class="badge text-bg-secondary">
-                                {{ chamado.get_status_display }}
-                            </span>
+                        <span class="badge text-bg-secondary">
+                            {{ chamado.get_status_display }}
+                        </span>
                         {% endif %}
                     </td>
 
@@ -213,16 +207,14 @@
         <div class="d-flex gap-2">
 
             {% if pagina.has_previous %}
-            <a class="nexus-btn nexus-btn-secondary"
-               href="?{% querystring page=pagina.previous_page_number %}">
+            <a class="nexus-btn nexus-btn-secondary" href="?{% querystring page=pagina.previous_page_number %}">
                 <i class="bi bi-chevron-left"></i>
                 Anterior
             </a>
             {% endif %}
 
             {% if pagina.has_next %}
-            <a class="nexus-btn nexus-btn-secondary"
-               href="?{% querystring page=pagina.next_page_number %}">
+            <a class="nexus-btn nexus-btn-secondary" href="?{% querystring page=pagina.next_page_number %}">
                 Próxima
                 <i class="bi bi-chevron-right"></i>
             </a>
